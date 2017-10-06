@@ -66,29 +66,7 @@ public class ParkJDBCDAO implements ParkDao {
 //		}
 //	}
 	
-	public List<Camp> getAllCampsByPark(Long longPark) {
-		ArrayList<Camp> campList = new ArrayList<>();
-		String sqlGetAllCamps = "SELECT * FROM campground WHERE park_id =?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetAllCamps, longPark);
-		while(results.next()) {
-			Camp theCamp = mapRowToCamp(results);
-			campList.add(theCamp);
-		}
-		return campList;	
-	}
 	
-	public Camp mapRowToCamp(SqlRowSet results) {
-		Camp theCamp;
-		theCamp = new Camp();
-		theCamp.setCampId(results.getLong("camp_id"));
-		theCamp.setCampId(results.getLong("park_id"));
-		theCamp.setCampName(results.getString("name"));
-		theCamp.setOpenMonth(results.getDate("open_from_mm").toLocalDate());
-		theCamp.setCloseMonth(results.getDate("open_to_mm").toLocalDate());
-		theCamp.setDailyFee(results.getBigDecimal("money"));
-		
-		return theCamp;
-	}
 
 
 }

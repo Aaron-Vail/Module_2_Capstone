@@ -48,12 +48,12 @@ private JdbcTemplate jdbcTemplate;
 	public Camp mapRowToCamp(SqlRowSet results) {
 		Camp theCamp;
 		theCamp = new Camp();
-		theCamp.setCampId(results.getLong("camp_id"));
+		theCamp.setCampId(results.getLong("campground_id"));
 		theCamp.setCampId(results.getLong("park_id"));
 		theCamp.setCampName(results.getString("name"));
-		theCamp.setOpenMonth(results.getDate("open_from_mm").toLocalDate());
-		theCamp.setCloseMonth(results.getDate("open_to_mm").toLocalDate());
-		theCamp.setDailyFee(results.getBigDecimal("money"));
+		theCamp.setOpenMonth(results.getLong("open_from_mm"));
+		theCamp.setCloseMonth(results.getLong("open_to_mm"));
+		theCamp.setDailyFee(results.getBigDecimal("daily_fee"));
 		
 		return theCamp;
 	}
