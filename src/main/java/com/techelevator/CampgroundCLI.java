@@ -134,24 +134,24 @@ public class CampgroundCLI {
 				Long longPark = choice.getParkId();
 				printCampgrounds(getAllCampsByPark(longPark));
 			} else if (choice2.equals(SELECT_A_COMMAND_SEARCH_RESERVATION)) {
-				handleReservation();
+				handleReservation(choice);
 			} else {
 				run();
 			}
 		}
 	}
 
-	private void handleReservation() {
+	private void handleReservation(Park choice) {
 		System.out.println("Search for Camp Reservation:"
 				+ "\n Name     Open       Close       Daily Fee");
 		Camp choice3 = (Camp) menu.getChoiceFromOptions(campDao.getAllCamps().toArray());
-		handleCampgroundChoice(choice3);
+		handleCampgroundChoice(choice, choice3);
 		
 		
 	}
 
 	@SuppressWarnings("resource")
-	private void handleCampgroundChoice(Camp choice3) {
+	private void handleCampgroundChoice(Park choice, Camp choice3) {
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
 		
 		//what is the arrival date
@@ -167,8 +167,32 @@ public class CampgroundCLI {
 //			
 //		}
 		printSites(getValidReservationsForSites(choice3, startReservationChoice, endReservationChoice), choice3, totalDays);
-		
+		handleMakeReservation(choice, choice3, startReservationChoice, endReservationChoice);
 
+	}
+
+	@SuppressWarnings("resource")
+	private void handleMakeReservation(Park choice, Camp choice3, LocalDate start, LocalDate end) {
+		Scanner input = new Scanner(System.in);
+		System.out.println(RESERVATION_DETAILS_SITE_NUMBER);
+		Long requestedSiteNumber = input.nextLong();
+		System.out.println(RESERVATION_DETAILS_ENTER_NAME);
+		String requester = input.next();
+		Long result = makeReservation(requestedSiteNumber, requester, choice, choice3, start, end);
+		System.out.print(result);
+	}
+
+	private long makeReservation(Long siteNumber, String requester, Park choice, Camp choice3, LocalDate start, LocalDate end) {
+		String sqlGetSiteId = "SELECT site_id FROM site s JOIN campground c ON s.campground_id = c.campground_id "
+				+ "JOIN park p ON c.park_id = p.park_id WHERE p.park_id=? AND c.campground_id=? AND s.site_number=?";
+		SqlRowSet result1 = jdbcTemplate.queryForRowSet(sqlGetSiteId, choice.getParkId(), choice3.getCampId(), siteNumber);
+		Long siteId = result1.getLong("site_id");
+		
+		
+		String sqlMakeReservation = "INSERT INTO reservation SET (site_id, name, from_date, to_date, create_date "
+				+ "RETURNING reservation_id";
+		Long result2 = jdbcTemplate.queryForObject(sqlMakeReservation, long.class, siteId, requester, start, end, LocalDate.now());
+		return result2;
 	}
 
 	private int getTotalDays(LocalDate start, LocalDate end) {
@@ -181,7 +205,7 @@ public class CampgroundCLI {
 		if(sitesToBeDisplayed.size() > 0) {
 			for(Site site : sitesToBeDisplayed) {
 				System.out.println(
-						"\nSite Number: " + site.getSiteId() +
+						"\nSite Number: " + site.getSiteNumber() +
 						"\nMax Occupancy: " + site.getMaxOccupancy() + 
 						"\nAccessible?: " + site.isAccessible() +
 						"\nMax RV Length: " + site.getMaxRVLength() +
@@ -201,7 +225,7 @@ public class CampgroundCLI {
 		String sqlGetAllSites = 
 				"SELECT * FROM site s WHERE campground_id = ? AND s.site_id NOT IN "
 				+ "(SELECT s.site_id FROM site s JOIN reservation r ON s.site_id = r.site_id WHERE campground_id =? "
-				+ "AND (to_date BETWEEN ? AND ? OR from_date BETWEEN ? AND ? OR (from_date <= ? AND to_date >= ?)))";
+				+ "AND (to_date BETWEEN ? AND ? OR from_date BETWEEN ? AND ? OR (from_date <= ? AND to_date >= ?))) LIMIT 5";
 	
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetAllSites, campID, campID, start, end, start, end, start, end);
 		while(results.next()) {
