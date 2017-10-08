@@ -27,25 +27,6 @@ public class Menu {
 		return choice;
 	}
 
-//	public BigDecimal getDecimalFromUser(String message) {
-//		BigDecimal inputtedDecimal = null;
-//		out.println(message);
-//		out.flush();
-//		do {
-//			try {
-//				String userInput = in.nextLine();
-//				inputtedDecimal = new BigDecimal(userInput);
-//				
-//				
-//			} catch(NumberFormatException ex) {
-//				out.print("Please input a valid number >>> ");
-//				out.flush();
-//			}
-//		} while (inputtedDecimal == null);
-//		System.out.print("Sorry that bill is not accepted");
-//		return new BigDecimal("0.00");
-//	}
-
 	public Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
 		String userInput = in.nextLine();

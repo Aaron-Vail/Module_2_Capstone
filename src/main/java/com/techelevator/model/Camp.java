@@ -50,7 +50,7 @@ public class Camp {
 		this.dailyFee = dailyFee;
 	} 
 	public String toString() {
-		String campStuff = campName +"      "+ showMonth(openMonth) +"      "+ showMonth(closeMonth) +"      $"+ dailyFee.setScale(2);
+		String campStuff = String.format("%-40s", campName) + String.format("%-10s", showMonth(openMonth)) + String.format("%-20s", showMonth(closeMonth)) +"$"+ dailyFee.setScale(2);
 		
 		
 		return campStuff;

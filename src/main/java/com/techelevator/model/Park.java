@@ -12,6 +12,12 @@ public class Park {
 	private int visitors;
 	private String description;
 	
+	public Park(String string) {
+		this.parkName = string;
+	}
+	public Park () {}
+	
+	
 	//getters and setters
 	public Long getParkId() {
 		return parkId;
