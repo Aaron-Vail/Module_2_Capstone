@@ -33,17 +33,7 @@ private JdbcTemplate jdbcTemplate;
 		return siteList;	
 	}
 
-	@Override
-	public List<Site> searchSiteByName(String nameSearch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Site getSiteById(Long siteId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	public Site mapRowToSite(SqlRowSet results) {
 		Site theSite;

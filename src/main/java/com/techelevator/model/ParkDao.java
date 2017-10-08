@@ -2,9 +2,10 @@ package com.techelevator.model;
 
 import java.util.List;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 public interface ParkDao {
 
 	public List<Park> getAllParks();
-	public List<Park> searchParkByName(String nameSearch);
-	public Park getParkById(Long parkId); 
+	public Park mapRowToPark(SqlRowSet results);
 }

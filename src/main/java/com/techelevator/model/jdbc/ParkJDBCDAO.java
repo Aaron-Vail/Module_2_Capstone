@@ -32,19 +32,8 @@ public class ParkJDBCDAO implements ParkDao {
 		}
 		return parkList;
 	}
-		
-	public List<Park> searchParkByName(String nameSearch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
-	public Park getParkById(Long parkId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private Park mapRowToPark(SqlRowSet results) {
+	public Park mapRowToPark(SqlRowSet results) {
 		Park thePark;
 		thePark = new Park();
 		thePark.setParkId(results.getLong("park_id"));
@@ -57,16 +46,10 @@ public class ParkJDBCDAO implements ParkDao {
 		
 		return thePark;
 	}
-	
-//	public void getExactPark () {
-//		String sqlGetExactPark = "SELECT * FROM park";
-//		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetExactPark);
-//		while(results.next()) {
-//			Park thePark = mapRowToPark(results);
-//		}
-//	}
-	
-	
+
+
+
+
 
 
 }

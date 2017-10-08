@@ -2,10 +2,10 @@ package com.techelevator.model;
 
 import java.util.List;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 public interface CampDao {
 	
 	public List<Camp> getAllCamps();
-	public List<Camp> searchCampByName(String nameSearch);
-	public Camp getCampById(Long campId); 
-
+	public Camp mapRowToCamp(SqlRowSet results);
 }

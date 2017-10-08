@@ -23,10 +23,4 @@ private JdbcTemplate jdbcTemplate;
 		return newReservation;
 	}
 
-	@Override
-	public long findReservation(Reservation reservation) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
