@@ -2,7 +2,6 @@ package com.techelevator.model;
 
 import java.math.BigDecimal;
 import java.text.DateFormatSymbols;
-import java.time.LocalDate;
 
 public class Camp {
 	

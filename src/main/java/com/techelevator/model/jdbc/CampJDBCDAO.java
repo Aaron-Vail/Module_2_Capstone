@@ -10,7 +10,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.techelevator.model.Camp;
 import com.techelevator.model.CampDao;
-import com.techelevator.model.Park;
 
 
 public class CampJDBCDAO implements CampDao {
@@ -31,18 +30,6 @@ private JdbcTemplate jdbcTemplate;
 			campList.add(theCamp);
 		}
 		return campList;	
-	}
-
-	@Override
-	public List<Camp> searchCampByName(String nameSearch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Camp getCampById(Long campId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	public Camp mapRowToCamp(SqlRowSet results) {
